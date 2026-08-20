@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+solve() {
+    local k="$1"
+    shift 2  # Skip k and header
+
+    printf "%s\n" "$@" | awk -F'\t' -v col="$k" '{print $col}'
+}
+
+read -r k  # The 1-based column index to extract
+read -r header  # The tab-separated header row, which is skipped
+mapfile -t rows  # Tab-separated data rows
+solve "$k" "$header" "${rows[@]}"
